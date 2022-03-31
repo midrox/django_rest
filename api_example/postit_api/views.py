@@ -56,14 +56,14 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def delete(self, request, *args, **kwargs):
-        comment = Post.objects.filter(pk=kwargs['pk'], user=self.request.user)
+        comment = Comment.objects.filter(pk=kwargs['pk'], user=self.request.user)
         if comment.exists():
             return self.destroy(request, *args, **kwargs)
         else:
             raise ValidationError(_("Cannot delete comments of other users!")) 
 
     def put(self, request, *args, **kwargs):
-        comment = Post.objects.filter(pk=kwargs['pk'], user=self.request.user)
+        comment = Comment.objects.filter(pk=kwargs['pk'], user=self.request.user)
         if comment.exists():
             return self.update(request, *args, **kwargs)
         else:
